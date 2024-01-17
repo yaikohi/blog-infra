@@ -5,4 +5,4 @@ metadata:
 spec:
   containers:
   - name: posts
-    image: yaikohi/posts:0.0.1
+    image: yaikohi/posts:latest
