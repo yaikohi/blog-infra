@@ -8,34 +8,42 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: posts.com
+    - host: "posts.com"
       http:
         paths:
-        - path: /posts/create
-          pathType: ImplementationSpecific
+        - path: "/posts/create"
+          pathType: Prefix
           backend:
             service:
               name: posts-clusterip-srv
               port:
                 number: 4000
-        - path: /posts
-          pathType: ImplementationSpecific
+        - path: "/posts"
+          pathType: Prefix
           backend:
             service:
               name: query-srv
               port: 
                 number: 4002
-        - path: /posts/.*/comments
+        - path: /posts/(.*)/comments
           pathType: ImplementationSpecific
           backend:
             service:
               name: comments-srv
               port: 
                 number: 4001
-        - path: /
-          pathType: ImplementationSpecific
+        - path: "/"
+          pathType: Prefix
           backend:
-            service:
-              name: client-srv
-              port: 
-                number: 4004
+           service:
+            name: client-srv
+            port: 
+              number: 4004
+        # - path: /posts/(^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$)/comments
+        #   pathType: ImplementationSpecific
+        #   backend:
+        #     service:
+        #       name: comments-srv
+        #       port: 
+        #         number: 4001
+        #
